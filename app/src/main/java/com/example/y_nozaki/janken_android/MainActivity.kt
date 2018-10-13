@@ -3,8 +3,11 @@ package com.example.y_nozaki.janken_android
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
+import javax.xml.transform.Result
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,11 +18,13 @@ class MainActivity : AppCompatActivity() {
         gu.setOnClickListener{ onJankenButtonTapped(it)}
         choki.setOnClickListener{ onJankenButtonTapped(it)}
         pa.setOnClickListener{ onJankenButtonTapped(it)}
+
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = pref.edit()
+        editor.clear().apply()
     }
 
     fun onJankenButtonTapped(view: View?) {
-        val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra("MY_HAND", view?.id)
-        startActivity(intent)
+        startActivity<ResultActivity>("MY_HAND" to view?.id)
     }
 }
